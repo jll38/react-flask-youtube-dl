@@ -19,7 +19,7 @@ def processVideo():
     yt = YouTube(url)
     channel = Channel(yt.channel_url)
     details = {
-        'link' : yt.title,
+        'title' : yt.title,
         'thumbnail_url' : yt.thumbnail_url,
         'channel' : channel.channel_name,
     }

@@ -2,7 +2,6 @@ import 'antd/dist/reset.css';
 import './App.css';
 import NotFound from './pages/NotFound';
 import HomePage from './pages/HomePage';
-import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
