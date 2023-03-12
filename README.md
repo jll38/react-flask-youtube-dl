@@ -1,7 +1,7 @@
 # Template for a React + Flask Web Application
-Simple template for creating web applications with a React frontend and Flask API Backend.
-Will be updating periodically.
-Template utilizes (ChakraUI)[https://chakra-ui.com/]
+A Web Application built to allow users to download Youtube videos via a valid URL.
+Built using React and Flask
+Utilizes (ChakraUI)[https://chakra-ui.com/]
 ## Installation
 
 ### Frontend
@@ -12,6 +12,3 @@ Template utilizes (ChakraUI)[https://chakra-ui.com/]
 ### Backend
 `cd flask-server` <br/>
 `python server.py` <br/>
-
-## Todo
-1. Dockerize project
