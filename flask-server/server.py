@@ -24,6 +24,10 @@ def processVideo():
         'channel' : channel.channel_name,
         'embed_url' : yt.embed_url
     }
+    print(yt.streams.filter(progressive=True))
+    stream = yt.streams.filter(progressive=True).get_by_resolution('720p')
+    print(stream)
+    stream.download(output_path='./downloads/')
     return details
 
 if __name__ == "__main__":
