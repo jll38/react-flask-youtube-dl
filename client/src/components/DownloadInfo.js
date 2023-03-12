@@ -23,7 +23,7 @@ import {
         boxShadow='-1px 10px 21px -3px rgba(0,0,0,0.75)'
         p='20px'>
             <Heading>{data.title}</Heading>
-            <HStack spacing='125px'>
+            <HStack spacing='110px'>
                 <Container float='left'>
                 <Text>{data.channel}</Text>
                 <Image src={data.thumbnail_url} maxW='200px'></Image>

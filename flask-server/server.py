@@ -22,6 +22,7 @@ def processVideo():
         'title' : yt.title,
         'thumbnail_url' : yt.thumbnail_url,
         'channel' : channel.channel_name,
+        'embed_url' : yt.embed_url
     }
     return details
 
