@@ -1,4 +1,4 @@
-# Template for a React + Flask Web Application
+# Youtube Downloader Web Application
 A Web Application built to allow users to download Youtube videos via a valid URL.
 Built using React and Flask
 ## Utilizes 
@@ -14,3 +14,8 @@ Built using React and Flask
 ### Backend
 `cd flask-server` <br/>
 `python server.py` <br/>
+
+## Todo
+- Implement quality choices for downloaded videos
+- Implement selection for video or audio files
+
