@@ -15,6 +15,20 @@ import {
   import { ReactNode } from 'react';
 
   export default function DownloadInfo({data}) {
+    const downloadVideo = async () => {
+        try {
+          const response = await fetch('/download');
+          const blob = await response.blob();
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', 'video.mp4');
+          document.body.appendChild(link);
+          link.click();
+        } catch (error) {
+          console.log(error);
+        }
+      }
     return (
       <Box
         bg={useColorModeValue('gray.50', 'gray.900')}
@@ -29,7 +43,7 @@ import {
                 <Image src={data.thumbnail_url} maxW='200px'></Image>
                 </Container>
                 <Container float='right'>
-                    <Button>Download</Button>
+                    <Button onClick={downloadVideo}>Download</Button>
                 </Container>
             </HStack>
       </Box>

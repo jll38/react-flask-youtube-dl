@@ -48,6 +48,7 @@ function HomePage() {
             <FormLabel>Youtube URL</FormLabel>
             <Input type='text' placeholder='https://www.youtube.com/watch?v=jNQXAC9IVRw&' id='videoInput'></Input>
             <Button colorScheme='purple' onClick={handleSubmit}>Download</Button>
+            <Text as='em'>This project is for <strong>educational purposes</strong> only</Text>
           </FormControl>
           {loadingInfo ? (<></>) : (<DownloadInfo data={data}/>)}
         </VStack>
