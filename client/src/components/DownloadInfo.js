@@ -17,12 +17,18 @@ import {
   export default function DownloadInfo({data}) {
     const downloadVideo = async () => {
         try {
-          const response = await fetch('/download');
+          const response = await fetch('/download', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title: data.title})
+          });
           const blob = await response.blob();
           const url = window.URL.createObjectURL(new Blob([blob]));
           const link = document.createElement('a');
           link.href = url;
-          link.setAttribute('download', 'video.mp4');
+          link.setAttribute('download', `RF-JL-${data.title}.mp4`);
           document.body.appendChild(link);
           link.click();
         } catch (error) {
@@ -43,7 +49,7 @@ import {
                 <Image src={data.thumbnail_url} maxW='200px'></Image>
                 </Container>
                 <Container float='right'>
-                    <Button onClick={downloadVideo}>Download</Button>
+                    <Button onClick={downloadVideo(data)}>Download</Button>
                 </Container>
             </HStack>
       </Box>

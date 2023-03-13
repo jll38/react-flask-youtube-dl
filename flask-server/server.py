@@ -35,15 +35,21 @@ def processVideo():
     }
     print(yt.streams.filter(progressive=True))
     stream = yt.streams.filter(progressive=True).get_by_resolution('720p')
+    if stream is None:
+        stream = yt.streams.filter(progressive=True).get_by_resolution('360p')
+        if stream is None:
+            return {"error": "no stream found"}
     print(stream)
-    stream.download(output_path='./downloads/', filename='download.mp4')
+    stream.download(output_path='./downloads/', filename = f"RF-JL-{yt.title}.mp4")
     return details
 
-@app.route("/download")
+@app.route("/download", methods=["POST"])
 def download():
+    title = request.json.get('title')
     print('downloadVideo() called')
-    mimetype = mimetypes.guess_type('./downloads/download.mp4')[0]
-    return send_file('./downloads/download.mp4', as_attachment=True, mimetype=mimetype)
+    filename = f"RF-JL-{title}.mp4"
+    mimetype = mimetypes.guess_type(filename)[0]
+    return send_file(f'./downloads/{filename}', as_attachment=True, mimetype=mimetype)
     
 if __name__ == "__main__":
     app.run(debug=True)

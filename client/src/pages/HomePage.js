@@ -41,17 +41,18 @@ function HomePage() {
 
   return (
     <>
-      <Center h='inherit' w='inherit'>
-        <VStack>
+      <Center h='inherit'>
+        <VStack w='750px'>
           <Heading>Download Youtube Video</Heading>
           <FormControl>
             <FormLabel>Youtube URL</FormLabel>
             <Input type='text' placeholder='https://www.youtube.com/watch?v=jNQXAC9IVRw&' id='videoInput'></Input>
-            <Button colorScheme='purple' onClick={handleSubmit}>Download</Button>
-            <Text as='em'>This project is for <strong>educational purposes</strong> only</Text>
+            <Button colorScheme='purple' onClick={handleSubmit}>Search</Button>
           </FormControl>
           {loadingInfo ? (<></>) : (<DownloadInfo data={data}/>)}
+          <Text as='em'>This project is for <strong>educational purposes</strong> only</Text>
         </VStack>
+        
 
       </Center>
     </>
