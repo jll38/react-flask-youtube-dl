@@ -18,9 +18,10 @@ import {
 } from '@chakra-ui/react';
 
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { ReactNode } from 'react';
+import { useState } from 'react';
 
 export default function DownloadInfo({ data }) {
+  const [outputMedia, setOutputMedia] = useState('Media Type');
   const downloadVideo = async () => {
     try {
       const response = await fetch('/download', {
@@ -28,7 +29,8 @@ export default function DownloadInfo({ data }) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title: data.title })
+        body: JSON.stringify({ title: data.title,
+        link: data.link, })
       });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(new Blob([blob]));
@@ -56,12 +58,13 @@ export default function DownloadInfo({ data }) {
           <Image src={data.thumbnail_url} maxW='200px'></Image>
         </Container>
         <Container float='right'>
-          <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon/>}>Media Type</MenuButton>
-            <MenuList>MP4</MenuList>
-            <MenuList>MP3</MenuList>
+          <Menu >
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon/>}>{outputMedia}</MenuButton>
+            <MenuList>
+            {data.mp4 ? (<MenuItem onClick={() => setOutputMedia('.MP4')}>MP4</MenuItem>) : (<MenuItem disabled>MP4</MenuItem>)}
+            {data.mp3 ? (<MenuItem onClick={() => setOutputMedia('.MP3')}>MP3</MenuItem>) : (<MenuItem disabled>MP3</MenuItem>)}
+            </MenuList>
           </Menu>
-          <Button onClick={downloadVideo}>Download</Button>
         </Container>
       </HStack>
     </Box>

@@ -27,25 +27,40 @@ def processVideo():
     url = request.json.get('link')
     yt = YouTube(url)
     channel = Channel(yt.channel_url)
-    details = {
-        'title' : yt.title,
-        'thumbnail_url' : yt.thumbnail_url,
-        'channel' : channel.channel_name,
-        'embed_url' : yt.embed_url
-    }
+    
     print(yt.streams.filter(progressive=True))
     stream = yt.streams.filter(progressive=True).get_by_resolution('720p')
     if stream is None:
         stream = yt.streams.filter(progressive=True).get_by_resolution('360p')
         if stream is None:
             return {"error": "no stream found"}
-    print(stream)
-    stream.download(output_path='./downloads/', filename = f"RF-JL-{yt.title}.mp4")
+    print(f'MP4 stream found: {stream}')
+    stream = yt.streams.filter(progressive=True).get_by_resolution('720p')
+    mp4stream = True
+    mp3stream = True
+    if stream is None:
+        stream = yt.streams.filter(progressive=True).get_by_resolution('360p')
+        if stream is None:
+            mp4stream = False
+    stream = yt.streams.filter(only_audio=True)
+    print(f'MP3 STREAM: {stream[0]}')
+    print(f'MP4 stream found: {mp4stream}')
+    print(f'MP3 stream found: {mp3stream}')
+    details = {
+        'title' : yt.title,
+        'thumbnail_url' : yt.thumbnail_url,
+        'channel' : channel.channel_name,
+        'embed_url' : yt.embed_url,
+        'link' :  yt.watch_url,
+        'mp4' : mp4stream,
+        'mp3': mp3stream
+    }
     return details
 
 @app.route("/download", methods=["POST"])
 def download():
     title = request.json.get('title')
+    link = request.json.get('link')
     print('downloadVideo() called')
     filename = f"RF-JL-{title}.mp4"
     mimetype = mimetypes.guess_type(filename)[0]
