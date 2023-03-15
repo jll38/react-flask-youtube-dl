@@ -6,14 +6,16 @@ Built using React and Flask
 - [Pytube](https://pytube.io/en/latest/)
 ## Installation
 <em>MacOS users need to install Ceritfi for Python to avoid SSL issues</em>
+
 ### Frontend
-`cd client`<br/>
-`npm i`<br/>
-`npm start`<br/>
+1. `cd client` <br/>
+2. `npm i` <br/>
+3. `npm start` <br/>
 
 ### Backend
-`cd flask-server` <br/>
-`python server.py` <br/>
+1. `cd flask-server` <br/>
+2. `pip3 install -r requirements.txt` <br/>
+3. `python server.py` <br/>
 
 ## Todo
 - Implement quality choices for downloaded videos
