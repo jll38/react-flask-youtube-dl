@@ -5,7 +5,7 @@ Built using React and Flask
 - [ChakraUI](https://chakra-ui.com/)
 - [Pytube](https://pytube.io/en/latest/)
 ## Installation
-
+<em>MacOS users need to install Ceritfi for Python for SSL</em>
 ### Frontend
 `cd client`<br/>
 `npm i`<br/>
