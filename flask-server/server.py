@@ -43,7 +43,10 @@ def processVideo():
         if stream is None:
             mp4stream = False
     stream = yt.streams.filter(only_audio=True)
-    print(f'MP3 STREAM: {stream[0]}')
+    if stream is None:
+        stream = yt.streams.filter(progressive=True).get_by_resolution('360p')
+        if stream is None:
+            mp3stream = False
     print(f'MP4 stream found: {mp4stream}')
     print(f'MP3 stream found: {mp3stream}')
     details = {
@@ -59,10 +62,28 @@ def processVideo():
 
 @app.route("/download", methods=["POST"])
 def download():
-    title = request.json.get('title')
-    link = request.json.get('link')
     print('downloadVideo() called')
-    filename = f"RF-JL-{title}.mp4"
+    data = request.json
+    title = data.get('title')
+    link = data.get('link')
+    type = data.get('type')
+    yt = YouTube(link)
+    stream = yt.streams.filter(progressive=True)[0]
+    print(f"Input Type {type}")
+    if(type == '.mp4'):
+        print(f"Downloading MP4")
+        stream = yt.streams.filter(progressive=True).get_by_resolution('720p').download()
+        if stream is None:
+            stream = yt.streams.filter(progressive=True).get_by_resolution('360p').download()
+            if stream is None:
+                return {"error": "no stream found"}
+    if(type == '.mp3'):
+        print(f"Downloading MP3")
+        stream = yt.streams.filter(only_audio=True)[0]
+        print(stream)
+    filename = f"RF-JL-{title}{type}"
+    print(f'filename: {filename}')
+    stream.download(output_path='./downloads/', filename = filename)
     mimetype = mimetypes.guess_type(filename)[0]
     return send_file(f'./downloads/{filename}', as_attachment=True, mimetype=mimetype)
     

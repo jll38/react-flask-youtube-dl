@@ -30,13 +30,14 @@ export default function DownloadInfo({ data }) {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ title: data.title,
-        link: data.link, })
+        link: data.link,
+        type: outputMedia.toLowerCase() })
       });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(new Blob([blob]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', `RF-JL-${data.title}.mp4`);
+      link.setAttribute('download', `RF-JL-${data.title}.${outputMedia}`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link); // remove the link after download
@@ -64,6 +65,15 @@ export default function DownloadInfo({ data }) {
             {data.mp4 ? (<MenuItem onClick={() => setOutputMedia('.MP4')}>MP4</MenuItem>) : (<MenuItem disabled>MP4</MenuItem>)}
             {data.mp3 ? (<MenuItem onClick={() => setOutputMedia('.MP3')}>MP3</MenuItem>) : (<MenuItem disabled>MP3</MenuItem>)}
             </MenuList>
+            <Button onClick={() => {
+              if (outputMedia != 'Media Type')
+              {
+                downloadVideo();
+              }else{
+                alert('Please select a media type');
+              }
+
+            }}>Download</Button>
           </Menu>
         </Container>
       </HStack>
