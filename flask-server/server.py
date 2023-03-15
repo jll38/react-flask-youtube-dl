@@ -72,19 +72,22 @@ def download():
     print(f"Input Type {type}")
     if(type == '.mp4'):
         print(f"Downloading MP4")
-        stream = yt.streams.filter(progressive=True).get_by_resolution('720p').download()
+        stream = yt.streams.filter(progressive=True).get_by_resolution('720p')
         if stream is None:
-            stream = yt.streams.filter(progressive=True).get_by_resolution('360p').download()
+            stream = yt.streams.filter(progressive=True).get_by_resolution('360p')
             if stream is None:
                 return {"error": "no stream found"}
-    if(type == '.mp3'):
+    elif(type == '.mp3'):
         print(f"Downloading MP3")
-        stream = yt.streams.filter(only_audio=True)[0]
+        stream = yt.streams.filter(only_audio=True).first()
         print(stream)
+    else:
+        return {"error": "invalid type"}
     filename = f"RF-JL-{title}{type}"
     print(f'filename: {filename}')
     stream.download(output_path='./downloads/', filename = filename)
     mimetype = mimetypes.guess_type(filename)[0]
+    print(f'mimetype: {mimetype}')
     return send_file(f'./downloads/{filename}', as_attachment=True, mimetype=mimetype)
     
 if __name__ == "__main__":
