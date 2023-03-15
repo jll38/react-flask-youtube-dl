@@ -19,5 +19,6 @@ Built using React and Flask
 
 ## Todo
 - Implement quality choices for downloaded videos
-- Implement selection for video or audio files
+- Implement selection for video or audio files <strong>DONE</strong>
+- Implement functionality for downloading playlists
 
