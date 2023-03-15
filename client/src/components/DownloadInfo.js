@@ -9,9 +9,15 @@ import {
   VisuallyHidden,
   Button,
   Image,
-  HStack
+  HStack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 
 } from '@chakra-ui/react';
+
+import { ChevronDownIcon } from '@chakra-ui/icons';
 import { ReactNode } from 'react';
 
 export default function DownloadInfo({ data }) {
@@ -50,6 +56,11 @@ export default function DownloadInfo({ data }) {
           <Image src={data.thumbnail_url} maxW='200px'></Image>
         </Container>
         <Container float='right'>
+          <Menu>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon/>}>Media Type</MenuButton>
+            <MenuList>MP4</MenuList>
+            <MenuList>MP3</MenuList>
+          </Menu>
           <Button onClick={downloadVideo}>Download</Button>
         </Container>
       </HStack>
