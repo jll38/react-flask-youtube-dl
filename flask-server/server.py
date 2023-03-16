@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from pytube import YouTube, Channel
+from pytube import YouTube, Channel, Playlist
 import mimetypes
 import os
 import shutil
@@ -59,6 +59,20 @@ def processVideo():
         'mp3': mp3stream
     }
     return details
+
+@app.route("/process-playlist", methods=["POST"])
+def processPlaylist():
+    print("Processing playlist...")
+    playlistData = request.json
+    playlist = Playlist(playlistData['link'])
+    title = playlist.title
+    videoURLS = playlist.video_urls[:3]
+    playlistDetails = {
+        'title' : title,
+        'videos' : videoURLS
+    }
+    return playlistDetails
+
 
 @app.route("/download", methods=["POST"])
 def download():
