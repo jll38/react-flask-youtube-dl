@@ -8,7 +8,7 @@ To run this application on your local machine, follow the instructions below:
 
 1. Clone the repository.
 
-2. Install the dependencies by running `npm install` in the  directory.
+2. Install the dependencies by running `npm install` in the `client` directory.
 
 3. Install Flask and other requirements by running `pip install -r requirements.txt` in the `flask-server` directory.
 
