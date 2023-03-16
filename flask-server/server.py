@@ -66,21 +66,33 @@ def processPlaylist():
     print("Processing playlist...")
     playlistData = request.json
     playlist = Playlist(playlistData['link'])
-    title = playlist.title
+    title = playlist.title.title() # Retrieves the title of the playlist and puts it in title case
 
     #Grab x amount of videos from the playlist | Haven't decided on upper limit yet
-    videoURLS = playlist.video_urls[:10]
+    videoURLS = playlist.video_urls[:50]
 
     #Get the thumbnails of the first 3 videos in the playlist
     videoThumbnails = []
-    for video in videoURLS[:3]: 
+    videoTitles = []
+    errorCount = 0
+    for video in videoURLS: 
         yt = YouTube(video)
         videoThumbnails.append(yt.thumbnail_url)
+        try:
+            vtitle = yt.title
+            videoTitles.append(vtitle)
+            print(f'Retrieved video title: {vtitle}')
+        except:
+            print(f'Failed to get title for video')
+            videoThumbnails.pop(-1)
+            errorCount += 1
+    print(f"Retrieved video thumbnails and titles with {errorCount} errors")
     playlistDetails = {
         'title' : title,
         'videos' : videoURLS,
         'thumbnails' : videoThumbnails,
-        'playlist' : True
+        'playlist' : True,
+        'videoTitles' : videoTitles
     }
     return playlistDetails
 
