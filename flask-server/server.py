@@ -56,7 +56,8 @@ def processVideo():
         'embed_url' : yt.embed_url,
         'link' :  yt.watch_url,
         'mp4' : mp4stream,
-        'mp3': mp3stream
+        'mp3': mp3stream,
+        'playlist' : False
     }
     return details
 
@@ -66,10 +67,20 @@ def processPlaylist():
     playlistData = request.json
     playlist = Playlist(playlistData['link'])
     title = playlist.title
-    videoURLS = playlist.video_urls[:3]
+
+    #Grab x amount of videos from the playlist | Haven't decided on upper limit yet
+    videoURLS = playlist.video_urls[:10]
+
+    #Get the thumbnails of the first 3 videos in the playlist
+    videoThumbnails = []
+    for video in videoURLS[:3]: 
+        yt = YouTube(video)
+        videoThumbnails.append(yt.thumbnail_url)
     playlistDetails = {
         'title' : title,
-        'videos' : videoURLS
+        'videos' : videoURLS,
+        'thumbnails' : videoThumbnails,
+        'playlist' : True
     }
     return playlistDetails
 

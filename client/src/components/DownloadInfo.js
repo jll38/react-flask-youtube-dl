@@ -58,6 +58,7 @@ export default function DownloadInfo({ data }) {
         <Container float='left'>
           <Text>{data.channel}</Text>
           <Image src={data.thumbnail_url} maxW='200px'></Image>
+          {data.playlist ? (<Text>Playlist</Text>) : (<Text>Not a playlist</Text>)}
         </Container>
         <Container float='right'>
           <Menu >
