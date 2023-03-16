@@ -29,6 +29,3 @@ This project was created by Julian Lechner in 2023. It uses the following librar
 - Chakra UI (https://chakra-ui.com/)
 - PyTube (https://pytube.io/)
 
-## License
-
-This project is licensed under the MIT License.
