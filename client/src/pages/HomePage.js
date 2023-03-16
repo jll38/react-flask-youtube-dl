@@ -55,7 +55,7 @@ function HomePage() {
             <Button colorScheme='purple' onClick={handleSubmit}>Search</Button>
           </FormControl>
           {loadingInfo ? (<></>) : (<DownloadInfo data={data}/>)}
-          <Text as='em'>This project is for <strong>educational purposes</strong> only</Text>
+          <Text as='em' pt='20px'>This project is for <strong>educational purposes</strong> only</Text>
         </VStack>
         
 

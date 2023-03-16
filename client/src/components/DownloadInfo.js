@@ -71,7 +71,7 @@ export default function DownloadInfo({ data }) {
                 ))}
               </Wrap>
             </Box>
-          ) : (<Text>Not a playlist</Text>)}
+          ) : (<></>)}
         </Container>
         <Container float='right'>
           <Menu >
