@@ -20,6 +20,7 @@ os.makedirs(downloads_dir)
 
 @app.route("/greeting")
 def default():
+    print("default() called")
     return {"message" : "Hello from the server!"}
 
 @app.route("/process", methods=["POST"])
@@ -127,5 +128,5 @@ def download():
     print(f'mimetype: {mimetype}')
     return send_file(f'./downloads/{filename}', as_attachment=True, mimetype=mimetype)
     
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=5001, host='0.0.0.0')
