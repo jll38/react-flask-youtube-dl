@@ -2,6 +2,8 @@
 
 This web application is built using React and Flask. It allows users to download videos from YouTube by providing a valid video link. The application also provides details such as video title, thumbnail, and channel name.
 
+Along with downloading singular videos from YouTube, this application will allow users to download whole playlists from Youtube by providing a valid url. 
+
 ## Installation
 
 To run this application on your local machine, follow the instructions below:

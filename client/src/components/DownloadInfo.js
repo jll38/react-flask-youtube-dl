@@ -14,6 +14,8 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Wrap,
+  WrapItem
 
 } from '@chakra-ui/react';
 
@@ -29,9 +31,11 @@ export default function DownloadInfo({ data }) {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ title: data.title,
-        link: data.link,
-        type: outputMedia.toLowerCase() })
+        body: JSON.stringify({
+          title: data.title,
+          link: data.link,
+          type: outputMedia.toLowerCase()
+        })
       });
       const blob = await response.blob();
       const url = window.URL.createObjectURL(new Blob([blob]));
@@ -58,19 +62,28 @@ export default function DownloadInfo({ data }) {
         <Container float='left'>
           <Text>{data.channel}</Text>
           <Image src={data.thumbnail_url} maxW='200px'></Image>
+          {data.playlist ? (
+            <Box w='350px'>
+              <Wrap h='250px' overflowY='scroll'>
+                {data.thumbnails.map((thumbnail, index) => (
+                  <WrapItem><Image key={index} src={thumbnail} maxW='75px'></Image>
+                  <Text>{data.videoTitles[index]}</Text></WrapItem>
+                ))}
+              </Wrap>
+            </Box>
+          ) : (<></>)}
         </Container>
         <Container float='right'>
           <Menu >
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon/>}>{outputMedia}</MenuButton>
+            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>{outputMedia}</MenuButton>
             <MenuList>
-            {data.mp4 ? (<MenuItem onClick={() => setOutputMedia('.MP4')}>MP4</MenuItem>) : (<MenuItem disabled>MP4</MenuItem>)}
-            {data.mp3 ? (<MenuItem onClick={() => setOutputMedia('.MP3')}>MP3</MenuItem>) : (<MenuItem disabled>MP3</MenuItem>)}
+              {data.mp4 ? (<MenuItem onClick={() => setOutputMedia('.MP4')}>MP4</MenuItem>) : (<MenuItem disabled>MP4</MenuItem>)}
+              {data.mp3 ? (<MenuItem onClick={() => setOutputMedia('.MP3')}>MP3</MenuItem>) : (<MenuItem disabled>MP3</MenuItem>)}
             </MenuList>
             <Button onClick={() => {
-              if (outputMedia != 'Media Type')
-              {
+              if (outputMedia != 'Media Type') {
                 downloadVideo();
-              }else{
+              } else {
                 alert('Please select a media type');
               }
 

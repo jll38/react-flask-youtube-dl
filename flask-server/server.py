@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
-from pytube import YouTube, Channel
+from pytube import YouTube, Channel, Playlist
 import mimetypes
 import os
 import shutil
@@ -20,6 +20,7 @@ os.makedirs(downloads_dir)
 
 @app.route("/greeting")
 def default():
+    print("default() called")
     return {"message" : "Hello from the server!"}
 
 @app.route("/process", methods=["POST"])
@@ -56,9 +57,46 @@ def processVideo():
         'embed_url' : yt.embed_url,
         'link' :  yt.watch_url,
         'mp4' : mp4stream,
-        'mp3': mp3stream
+        'mp3': mp3stream,
+        'playlist' : False
     }
     return details
+
+@app.route("/process-playlist", methods=["POST"])
+def processPlaylist():
+    print("Processing playlist...")
+    playlistData = request.json
+    playlist = Playlist(playlistData['link'])
+    title = playlist.title.title() # Retrieves the title of the playlist and puts it in title case
+
+    #Grab x amount of videos from the playlist | Haven't decided on upper limit yet
+    videoURLS = playlist.video_urls[:50]
+
+    #Get the thumbnails of the first 3 videos in the playlist
+    videoThumbnails = []
+    videoTitles = []
+    errorCount = 0
+    for video in videoURLS: 
+        yt = YouTube(video)
+        videoThumbnails.append(yt.thumbnail_url)
+        try:
+            vtitle = yt.title
+            videoTitles.append(vtitle)
+            print(f'Retrieved video title: {vtitle}')
+        except:
+            print(f'Failed to get title for video')
+            videoThumbnails.pop(-1)
+            errorCount += 1
+    print(f"Retrieved video thumbnails and titles with {errorCount} errors")
+    playlistDetails = {
+        'title' : title,
+        'videos' : videoURLS,
+        'thumbnails' : videoThumbnails,
+        'playlist' : True,
+        'videoTitles' : videoTitles
+    }
+    return playlistDetails
+
 
 @app.route("/download", methods=["POST"])
 def download():
@@ -90,5 +128,5 @@ def download():
     print(f'mimetype: {mimetype}')
     return send_file(f'./downloads/{filename}', as_attachment=True, mimetype=mimetype)
     
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True, port=5001, host='0.0.0.0')

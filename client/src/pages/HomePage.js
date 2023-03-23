@@ -13,10 +13,15 @@ function HomePage() {
   const [data, setData] = useState()
   const handleSubmit = () => {
     const url = document.getElementById('videoInput').value;
-    
+    let destination = '/process'
+    if(url.includes('list=')) {
+      destination = '/process-playlist'
+      console.log('Playlist detected')
+    }
+    console.log(`Destination: ${destination}`)
     const youtubeRegex = /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube(-nocookie)?\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/;
     if (url.match(youtubeRegex)) {
-      fetch("/process", {
+      fetch(`${destination}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -50,7 +55,7 @@ function HomePage() {
             <Button colorScheme='purple' onClick={handleSubmit}>Search</Button>
           </FormControl>
           {loadingInfo ? (<></>) : (<DownloadInfo data={data}/>)}
-          <Text as='em'>This project is for <strong>educational purposes</strong> only</Text>
+          <Text as='em' pt='20px'>This project is for <strong>educational purposes</strong> only</Text>
         </VStack>
         
 
