@@ -4,6 +4,8 @@ This web application is built using React and Flask. It allows users to download
 
 Along with downloading singular videos from YouTube, this application will allow users to download whole playlists from Youtube by providing a valid url. 
 
+<img src="yt-dl-example.gif"></img>
+
 ## Installation (Local Machine)
 
 To run this application on your local machine, follow the instructions below:
@@ -12,13 +14,15 @@ To run this application on your local machine, follow the instructions below:
 
 2. Install the dependencies by running `npm install` in the `client` directory.
 
-3. Install Flask and other requirements by running `pip install -r requirements.txt` in the `flask-server` directory.
+3. Ensure that the proxy in `package.json` points to https://127.0.0.1:5001/
 
-4. Start the Flask server by running `python server.py` in the `flask-server` directory.
+4. Install Flask and other requirements by running `pip install -r requirements.txt` in the `flask-server` directory.
 
-5. Start the React app by running `npm start` in the client directory.
+5. Start the Flask server by running `python server.py` in the `flask-server` directory.
 
-6. Navigate to http://localhost:3000 in your web browser.
+6. Start the React app by running `npm start` in the client directory.
+
+7. Navigate to http://localhost:3000 in your web browser.
 
 ## Installation using Docker Compose
 
@@ -26,11 +30,13 @@ To run this application on your local machine, follow the instructions below:
 
 2. Navigate to the top directory of the project.
 
-3. Build the Docker images for the Flask server and the React app by running `docker-compose build`.
+3. Ensure that the proxy in `package.json` points to `https://backend:5001/`
 
-4. Start the containers by running `docker-compose up`.
+4. Build the Docker images for the Flask server and the React app by running `docker-compose build`.
 
-5. Navigate to http://localhost:3000 in your web browser.
+5. Start the containers by running `docker-compose up`.
+
+6. Navigate to http://localhost:3000 in your web browser.
 
 
 ## Credits

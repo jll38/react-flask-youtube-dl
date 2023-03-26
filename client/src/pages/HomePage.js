@@ -5,7 +5,7 @@ import DownloadInfo from '../components/DownloadInfo';
 import HeaderDiv from '../components/HeaderDiv';
 import {
   Center, Heading, Text, FormControl, Input,
-  FormLabel, FormHelperText, Button, VStack
+  FormLabel, FormHelperText, Button, VStack, Image
 } from '@chakra-ui/react'
 
 function HomePage() {
